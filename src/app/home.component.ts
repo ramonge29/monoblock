@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
+import { RouterModule } from '@angular/router';
 
 @Component ({
     standalone: true,
     selector: 'monoblock-home-page',
+    imports: [RouterModule],
     template:`
-    <header>
-        Hola mundo
-    </header>
+    
 
     `
 
