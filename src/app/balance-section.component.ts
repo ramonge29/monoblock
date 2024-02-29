@@ -8,7 +8,7 @@ import { ShyftApiService } from './shyft-api.service';
   selector: 'monoblock-balance-section',
   standalone: true,
   template: `
-    <section class="flex flex-row h-16 mt-16 m-auto w-11/12 align-middle">
+    <section class="flex flex-row h-16 mt-16 m-auto w-11/12 align-middle justify-center">
       <p class="text-center align-middle">Tu balance es:</p>
       @if (account()) {
         <div class="flex align-middle gap-4 ml-6">
