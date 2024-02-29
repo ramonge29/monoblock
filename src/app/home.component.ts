@@ -4,7 +4,10 @@ import { Component } from '@angular/core';
     standalone: true,
     selector: 'monoblock-home-page',
     template:`
-        Hola Mundo
+    <header>
+        Hola mundo
+    </header>
+
     `
 
 })
