@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Component } from '@angular/core';
+import { createTransferInstructions } from '@heavy-duty/spl-utils';
+import { injectTransactionSender } from '@heavy-duty/wallet-adapter';
 import { TransferFormComponent, TransferFormPayLoad } from './transfer-form.component';
 
 @Component({
@@ -15,7 +17,26 @@ import { TransferFormComponent, TransferFormPayLoad } from './transfer-form.comp
 })
 
 export class transferModalComponent {
+    private readonly _transactionSender = injectTransactionSender();
+
     onTransfer(payload: TransferFormPayLoad) {
-        console.log('hola mundo', payload);
+        console.log('hola mundo!', payload);
+        
+        this._transactionSender
+        .send(({ publicKey }) => 
+            createTransferInstructions({
+                amount: payload.amount,
+                mintAddress: '7EYnhQoR9YM3N7UoaKRoA44Uy8JeaZV3qyouov87awMs',
+                receiverAddress: payload.receiverAddress,
+                senderAddress: publicKey.toBase58(),
+                fundReceiver: true,
+                memo: payload.memo,
+            }),     
+        )
+        .subscribe ({
+            next: (signature) => console.log(`Firma: ${signature}`),
+            error: error => console.error(error),
+            complete: () => console.log('Trasaccion lista')
+        })    
     }
 }
