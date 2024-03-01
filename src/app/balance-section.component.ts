@@ -1,8 +1,11 @@
 import { Component, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { MatDialog } from '@angular/material/dialog';
 import { WalletStore } from '@heavy-duty/wallet-adapter';
 import { computedAsync } from 'ngxtension/computed-async';
 import { ShyftApiService } from './shyft-api.service';
+import { transferModalComponent } from './transfer-modal.componet';
+
 
 @Component({
   selector: 'monoblock-balance-section',
@@ -17,15 +20,25 @@ import { ShyftApiService } from './shyft-api.service';
         </div>
       }
     </section>
+    <div>
+      <button class="flex justify-center w-full" (click)="onTransfer()"> Tranferir </button>
+    </div>  
   `,
 })
 export class BalanceSectionComponent {
   private readonly _ShyftApiService = inject(ShyftApiService);
   private readonly _walletStore = inject(WalletStore);
   private readonly _publicKey = toSignal(this._walletStore.publicKey$);
+  private readonly _matDialog = inject(MatDialog);
 
   readonly account = computedAsync(
     () => this._ShyftApiService.getAccount(this._publicKey()?.toBase58()),
     { requireSync: true },
   );
+
+  onTransfer() {
+    this._matDialog.open(transferModalComponent)
+  }
+
+
 }
