@@ -9,6 +9,12 @@ export class ShyftApiService {
   private readonly _header = { 'x-api-key': config.shyftApiKey };
   private readonly _mint = config.mint;
 
+  getEndPoint() {
+    const url = new URL('https://rpc.shyft.to');
+    url.searchParams.set('api_key', config.shyftApiKey);
+    return url.toString();
+  }
+
   getAccount(publicKey: string | null | undefined) {
     if (!publicKey) {
       return of(null);
@@ -33,7 +39,7 @@ export class ShyftApiService {
 
     url.searchParams.set('network', 'mainnet-beta');
     url.searchParams.set('account', publicKey);
-    url.searchParams.set('tx-num', '5')
+    url.searchParams.set('tx-num', '5');
 
     return this._httpClient
       .get<{ result: { status: string; type: string; timestamp: string }[] }>(
