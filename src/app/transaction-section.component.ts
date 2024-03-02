@@ -10,7 +10,7 @@ import { ShyftApiService } from './shyft-api.service';
   standalone: true,
   imports: [MatCard, MatTableModule],
   template: `
-    <mat-card class="w-full px-4 py-8 justify-center m-auto mt-5">
+    <mat-card class="w-[600px] px-4 py-8 justify-center m-auto mt-5">
       <h2 class="text-center text-3xl mb-3">Historial de transacciones</h2>
       @if (!transaction()) {
         <p class="text-center justify-center items-center">
@@ -20,7 +20,6 @@ import { ShyftApiService } from './shyft-api.service';
         <p class="text-white">No hay transacciones disponibles.</p>
       } @else {
         <table mat-table [dataSource]="transaction()">
-
           <ng-container matColumnDef="type">
             <th mat-Header-cell *matHeaderCellDef>Type</th>
             <td mat-cell *matCellDef="let element">{{ element.type }}</td>
